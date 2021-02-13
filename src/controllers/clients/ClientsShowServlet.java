@@ -1,4 +1,4 @@
-package controllers.employees;
+package controllers.clients;
 
 import java.io.IOException;
 
@@ -10,36 +10,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Employee;
+import models.Client;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class EmployeesShowServlet
+ * Servlet implementation class ClientsShowServlet
  */
-@WebServlet("/employees/show")
-public class EmployeesShowServlet extends HttpServlet {
+@WebServlet("/clients/show")
+public class ClientsShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeesShowServlet() {
+    public ClientsShowServlet() {
         super();
     }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
+        Client c = em.find(Client.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
 
-        request.setAttribute("employee", e);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/show.jsp");
+        request.setAttribute("client", c);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/clients/show.jsp");
         rd.forward(request, response);
     }
 

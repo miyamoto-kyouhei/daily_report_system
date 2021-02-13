@@ -1,4 +1,4 @@
-package controllers.toppage;
+package controllers.reports;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,32 +11,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Employee;
 import models.Report;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class TopPageIndexServlet
+ * Servlet implementation class ReportsSearchServlet
  */
-@WebServlet("/index.html")
-public class TopPageIndexServlet extends HttpServlet {
+@WebServlet("/reports//search")
+public class ReportsSearchServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TopPageIndexServlet() {
+    public ReportsSearchServlet() {
         super();
     }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        EntityManager em = DBUtil.createEntityManager();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
+        EntityManager em = DBUtil.createEntityManager();
 
         int page;
         try {
@@ -44,14 +41,15 @@ public class TopPageIndexServlet extends HttpServlet {
         } catch (Exception e) {
             page = 1;
         }
-        List<Report> reports = em.createNamedQuery(Report.FIND_BY_EMPLOYEES, Report.class)
-                .setParameter("employee", login_employee)
+
+        String search = request.getParameter("search");
+
+        List<Report> reports = em.createNamedQuery(searchMethod(search), Report.class)
                 .setFirstResult(15 * (page - 1))
                 .setMaxResults(15)
                 .getResultList();
 
-        long reports_count = (long) em.createNamedQuery(Report.FIND_BY_EMPLOYEES_COUNT, Long.class)
-                .setParameter("employee", login_employee)
+        long reports_count = (long) em.createNamedQuery(Report.REPORTS_COUNT, Long.class)
                 .getSingleResult();
 
         em.close();
@@ -59,14 +57,25 @@ public class TopPageIndexServlet extends HttpServlet {
         request.setAttribute("reports", reports);
         request.setAttribute("reports_count", reports_count);
         request.setAttribute("page", page);
-
         if (request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/index.jsp");
         rd.forward(request, response);
+    }
+
+    private static String searchMethod(String search){
+
+        switch (search) {
+        case "":return "";
+
+
+        default:return "getAllReports";
+        }
+
+
     }
 
 }

@@ -13,49 +13,67 @@ import javax.persistence.Table;
 
 @Table(name = "employees")
 @NamedQueries({
-    @NamedQuery(
-        name = "getAllEmployees",
-        query = "SELECT e FROM Employee AS e ORDER BY e.id DESC"
-    ),
-    @NamedQuery(
-        name = "getEmployeesCount",
-        query = "SELECT COUNT(e) FROM Employee AS e"
-    ),
-    @NamedQuery(
-        name = "checkRegisteredCode",
-        query = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :code"
-    ),
-    @NamedQuery(
-        name = "checkLoginCodeAndPassword",
-        query = "SELECT e FROM Employee AS e WHERE e.delete_flag = 0 AND e.code = :code AND e.password = :pass"
-    )
+        @NamedQuery(name = Employee.ALL_EMPLOYEES, query = "SELECT e FROM Employee AS e ORDER BY e.id DESC"),
+        @NamedQuery(name = Employee.EMPLOYEES_COUNT, query = "SELECT COUNT(e) FROM Employee AS e"),
+        @NamedQuery(name = Employee.CHECK_REGISTERED_CODE, query = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :code"),
+        @NamedQuery(name = Employee.CHECK_LOGIN_CODE_AND_PASSWORD, query = "SELECT e FROM Employee AS e WHERE e.delete_flag = 0 AND e.code = :code AND e.password = :pass"),
 })
 @Entity
 public class Employee {
+
+    public static final String ALL_EMPLOYEES = "getAllEmployees";
+    public static final String EMPLOYEES_COUNT = "getEmployeesCount";
+    public static final String CHECK_REGISTERED_CODE = "checkRegisteredCode";
+    public static final String CHECK_LOGIN_CODE_AND_PASSWORD = "checkLoginCodeAndPassword";
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+     * 社員ID
+     */
     private Integer id;
 
     @Column(name = "code", nullable = false, unique = true)
+    /**
+     * 社員番号
+     */
     private String code;
 
     @Column(name = "name", nullable = false)
+    /**
+     * 社員名
+     */
     private String name;
 
     @Column(name = "password", length = 64, nullable = false)
+    /**
+     * ログインパスワード
+     */
     private String password;
 
     @Column(name = "admin_flag", nullable = false)
+    /**
+     * 管理者権限フラグ
+     */
     private Integer admin_flag;
 
     @Column(name = "created_at", nullable = false)
+    /**
+     * 登録日時
+     */
     private Timestamp created_at;
 
     @Column(name = "updated_at", nullable = false)
+    /**
+     * 更新日時
+     */
     private Timestamp updated_at;
 
     @Column(name = "delete_flag", nullable = false)
+    /**
+     * 削除フラグ
+     */
     private Integer delete_flag;
 
     public Integer getId() {
@@ -121,4 +139,5 @@ public class Employee {
     public void setDelete_flag(Integer delete_flag) {
         this.delete_flag = delete_flag;
     }
+
 }

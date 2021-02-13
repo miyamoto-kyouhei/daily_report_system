@@ -1,4 +1,4 @@
-package controllers.toppage;
+package controllers.clients;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Employee;
-import models.Report;
+import models.Client;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class TopPageIndexServlet
+ * Servlet implementation class ClientsIndexServlet
  */
-@WebServlet("/index.html")
-public class TopPageIndexServlet extends HttpServlet {
+@WebServlet("/clients/index")
+public class ClientsIndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TopPageIndexServlet() {
+    public ClientsIndexServlet() {
         super();
     }
 
@@ -34,38 +33,34 @@ public class TopPageIndexServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         EntityManager em = DBUtil.createEntityManager();
 
-        Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
-
-        int page;
+        int page = 1;
         try {
             page = Integer.parseInt(request.getParameter("page"));
-        } catch (Exception e) {
-            page = 1;
+        } catch (NumberFormatException e) {
         }
-        List<Report> reports = em.createNamedQuery(Report.FIND_BY_EMPLOYEES, Report.class)
-                .setParameter("employee", login_employee)
+        List<Client> clients = em.createNamedQuery(Client.All_CLIENTS, Client.class)
                 .setFirstResult(15 * (page - 1))
                 .setMaxResults(15)
                 .getResultList();
 
-        long reports_count = (long) em.createNamedQuery(Report.FIND_BY_EMPLOYEES_COUNT, Long.class)
-                .setParameter("employee", login_employee)
+        long clients_count = (long) em.createNamedQuery(Client.CLIENTS_COUNT, Long.class)
                 .getSingleResult();
+
 
         em.close();
 
-        request.setAttribute("reports", reports);
-        request.setAttribute("reports_count", reports_count);
+        request.setAttribute("clients", clients);
+        request.setAttribute("clients_count", clients_count);
         request.setAttribute("page", page);
-
         if (request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/clients/index.jsp");
         rd.forward(request, response);
     }
 

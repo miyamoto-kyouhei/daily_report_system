@@ -1,4 +1,4 @@
-package controllers.employees;
+package controllers.clients;
 
 import java.io.IOException;
 
@@ -9,34 +9,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Employee;
+import models.Client;
 
 /**
- * Servlet implementation class EmployeesNewServlet
+ * Servlet implementation class ClientsNewServlet
  */
-@WebServlet("/employees/new")
-public class EmployeesNewServlet extends HttpServlet {
+@WebServlet("/clients/new")
+public class ClientsNewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeesNewServlet() {
+    public ClientsNewServlet() {
         super();
     }
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("_token", request.getSession().getId());
-        request.setAttribute("employee", new Employee());
+        request.setAttribute("client", new Client());
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/clients/new.jsp");
         rd.forward(request, response);
     }
+
 
 }

@@ -6,7 +6,7 @@ body {
         Arial, sans-serif;
 }
 
-#header {
+header {
     width: 100%;
     height: 70px;
     background-color: #333333;
@@ -14,8 +14,10 @@ body {
 
 #content {
     width: 94%;
+    padding-bottom:30px;
     margin-top: 15px;
     padding-left: 3%;
+    flex-grow: 1;
 }
 
 h1 {
@@ -55,6 +57,8 @@ table {
 th {
     width: 26%;
     padding: 10px 2%;
+    text-align: center;
+    background-color: #ddd;
 }
 
 td {
@@ -67,8 +71,49 @@ button {
     padding: 5px 10px;
 }
 
-#footer {
+
+.select-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+}
+
+.select-wrap:before {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: url(../img/select.png) no-repeat;
+  background-size: contain;
+}
+
+.select-wrap select{
+  width: 100%;
+  outline:none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 40px;
+}
+
+
+#wrapper{
+ display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+footer {
+    width: 100%;
+    background-color: #89c7de;
+    color: #fff;
     text-align: center;
+    padding: 25px 0;
+ margin-top: auto;
 }
 
 #flush_success {
@@ -101,11 +146,22 @@ table#employee_list td {
     padding: 10px 2%;
 }
 
-tr.row1 {
-        background-color: #f2f2f2;
+table#client_list th {
+    width: 30%;
+    padding: 10px 2%;
 }
+
+table#client_list td {
+    width: 29%;
+    padding: 10px 2%;
+}
+
+tr.row1 {
+    background-color: #f2f2f2;
+}
+
 tr.row0 {
-        background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 select {
@@ -127,7 +183,7 @@ select {
     display: inline-block;
 }
 
-#header a {
+header a {
     color: #eeeeee;
 }
 
@@ -144,6 +200,7 @@ table#report_list .report_name {
     width: 20%;
     padding: 10px 2%;
 }
+
 table#report_list .report_date {
     width: 20%;
 }
@@ -157,9 +214,165 @@ table#report_list .report_action {
 }
 
 pre {
-    font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
+    font-family: "Hiragino Kaku Gothic Pro", Meiryo, "MS PGothic", Helvetica,
+        Arial, sans-serif;
 }
 
 h3 {
     font-size: larger;
 }
+
+/*いいねボタン*/
+.favorite {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.favorite a.btn {
+    color: #777;
+    font-size: 90%;
+    line-height: 2em;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff),
+        to(#eee));
+    background-color: #eee;
+}
+
+.favorite a.btn:focus, .favorite a.btn:hover {
+    opacity: 0.75
+}
+
+.favorite a.btn_on {
+    color: #fff;
+    font-size: 90%;
+    line-height: 2em;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background-color: #ffb6c1;
+}
+
+.favorite a.btn_on:focus, .favorite a.btn_on:hover {
+    opacity: 0.75
+}
+
+/*フォローボタン*/
+.follow {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.follow a.btn {
+    color: #777;
+    font-size: 90%;
+    line-height: 2em;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff),
+        to(#eee));
+    background-color: #eee;
+}
+
+.follow a.btn:focus, .follow a.btn:hover {
+    opacity: 0.75
+}
+
+.follow a.btn_on {
+    color: #fff;
+    font-size: 90%;
+    line-height: 2em;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background-color: #ffb6c1;
+}
+
+.follow a.btn_on:focus, .follow a.btn_on:hover {
+    opacity: 0.75
+}
+
+/*吹き出し*/
+.balloon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.balloon span.number {
+    color: #777;
+    font-size: 90%;
+    line-height: 2em;
+    padding: 5px 10px;
+    position: relative;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.balloon span.number:after, .balloon span.number:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: "";
+    position: absolute;
+}
+
+.balloon span.number:after {
+    border-right-color: #fff;
+    border-width: 4px;
+    margin-top: -4px
+}
+
+.balloon span.number:before {
+    border-right-color: #ccc;
+    border-width: 5px;
+    margin-top: -5px;
+}
+
+.tabs {
+  margin-top: 50px;
+  padding-bottom: 40px;
+  background-color: #fff;
+
+  margin: 0 auto;
+  }
+
+
+.tab_item {
+  width: 250px;
+  height: 50px;
+  border-bottom: 3px solid #5ab4bd;
+  background-color: #d9d9d9;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #565656;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.tab_item:hover {
+  opacity: 0.75;
+}
+
+.tab_content {
+  padding: 40px 40px 0;
+  clear: both;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.tab_item_checked {
+  background-color: #5ab4bd;
+    color: #fff;
+}
+

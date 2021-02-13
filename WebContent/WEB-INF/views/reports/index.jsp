@@ -8,7 +8,14 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>日報　一覧</h2>
+        <h2>日報&nbsp;&nbsp;一覧</h2>
+        <div class="tabs">
+        <a href="<c:url value='/reports/index?search=all' />" class="tab_item <c:if test="${search == null || search == 'all'}"><c:out value="tab_item_checked"></c:out></c:if>">全社員</a>
+        <a href="<c:url value='/reports/index?search=follow' />" class="tab_item <c:if test="${search == 'follow'}"><c:out value="tab_item_checked"></c:out></c:if>">フォロー</a>
+        <a href="<c:url value='/reports/index?search=favorite' />" class="tab_item <c:if test="${search == 'favorite'}"><c:out value="tab_item_checked"></c:out></c:if>">いいね</a>
+
+
+  <div class="tab_content">
         <table id="report_list">
             <tbody>
                 <tr>
@@ -36,11 +43,15 @@
                         <c:out value="${i}" />&nbsp;
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value='/reports/index?page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        <a href="<c:url value='/reports/index?search=${search}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
         </div>
+
+
+</div>
+</div>
         <p><a href="<c:url value='/reports/new' />">新規日報の登録</a></p>
 
     </c:param>
